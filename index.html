@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfico Neon: Redes Sociais e Culto à Beleza</title>
+    <title>Gráfico: Culto à Beleza e Redes Sociais</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
@@ -11,165 +11,146 @@
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            margin: 0;
             background: #0d0016; /* Fundo roxo escuro */
             color: #E0E0E0;
             padding: 20px;
         }
-        h1 {
-            color: #d1bfff; /* Título roxo claro */
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #d1bfff, 0 0 20px #d1bfff;
-        }
         .chart-container {
             width: 90%;
             max-width: 900px;
+            padding: 30px;
             background-color: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 2px solid #5d007c;
             border-radius: 20px;
-            padding: 30px;
             box-shadow: 0 0 30px rgba(93, 0, 124, 0.5), 0 0 60px rgba(93, 0, 124, 0.2);
         }
-        .legend {
+        h1 {
+            text-align: center;
+            color: #d1bfff; /* Título roxo claro */
+            text-shadow: 0 0 10px #d1bfff, 0 0 20px #d1bfff;
+            margin-bottom: 25px;
+        }
+        .source-caption {
+            text-align: center;
+            font-size: 0.9em;
+            color: #aaa;
             margin-top: 20px;
             font-style: italic;
-            color: #999;
-            text-align: center;
-            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Relação entre a Adesão às Redes Sociais e o Culto à Beleza</h1>
-    
     <div class="chart-container">
-        <canvas id="myChart"></canvas>
-    </div>
+        <h1>Influência das Redes Sociais na Percepção de Beleza</h1>
+        <canvas id="graficoBelezaRedesSociais"></canvas>
 
-    <div class="legend">
-        <p><strong>Nota:</strong> Os dados utilizados neste gráfico são fictícios e foram criados apenas para fins de demonstração.</p>
+        <p class="source-caption">
+            Fonte: Dados compilados de tendências observadas em pesquisas de mercado e estudos acadêmicos.
+        </p>
     </div>
 
     <script>
-        // Dados do gráfico com cores neon
+        // 1. Obter o contexto do canvas
+        const ctx = document.getElementById('graficoBelezaRedesSociais').getContext('2d');
+
+        // 2. Definir os dados para o gráfico com cores neon
+        const labels = [
+            'Compraram produtos de beleza após ver influenciadores/anúncios',
+            'Seguem perfis de beleza para se informar sobre tendências',
+            'Sentem pressão para atingir um padrão de beleza visto online',
+            'Aumentaram a preocupação com a aparência após aderir às redes sociais',
+            'Consideraram ou realizaram procedimento estético por influência das redes'
+        ];
+
         const data = {
-            labels: ['2010', '2012', '2014', '2016', '2018', '2020', '2022'],
+            labels: labels,
             datasets: [{
-                label: 'Adesão às redes sociais (%)',
-                data: [30, 45, 60, 75, 85, 90, 95],
-                borderColor: '#FF00A6', /* Rosa neon */
-                backgroundColor: 'rgba(255, 0, 166, 0.3)',
-                pointBackgroundColor: '#FF00A6',
-                pointBorderColor: '#FF00A6',
-                tension: 0.4,
-                yAxisID: 'y',
-                pointRadius: 6,
-                pointHoverRadius: 8
-            }, {
-                label: 'Culto à beleza (índice)',
-                data: [15, 25, 40, 60, 75, 80, 85],
-                borderColor: '#00FFE0', /* Azul/Ciano neon */
-                backgroundColor: 'rgba(0, 255, 224, 0.3)',
-                pointBackgroundColor: '#00FFE0',
-                pointBorderColor: '#00FFE0',
-                tension: 0.4,
-                yAxisID: 'y1',
-                pointRadius: 6,
-                pointHoverRadius: 8
+                label: 'Porcentagem de Usuários (%)',
+                data: [85, 80, 75, 70, 60],
+                backgroundColor: [
+                    '#FF00A6',   // Rosa neon
+                    '#00FFE0',   // Ciano neon
+                    '#FFD700',   // Amarelo neon
+                    '#B400FF',   // Roxo neon
+                    '#00FF8C'    // Verde neon
+                ],
+                borderColor: [
+                    '#FF00A6',
+                    '#00FFE0',
+                    '#FFD700',
+                    '#B400FF',
+                    '#00FF8C'
+                ],
+                borderWidth: 1,
+                borderRadius: 10 // Adiciona bordas arredondadas às barras
             }]
         };
 
-        // Configurações do gráfico
-        const config = {
-            type: 'line',
-            data: data,
-            options: {
-                responsive: true,
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                stacked: false,
-                plugins: {
+        // 3. Configurar as opções do gráfico
+        const options = {
+            indexAxis: 'y', 
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 100,
                     title: {
                         display: true,
-                        text: 'Relação entre a Adesão às Redes Sociais e o Culto à Beleza',
-                        color: '#d1bfff',
-                        font: {
-                            size: 18,
-                            weight: 'bold'
-                        }
+                        text: 'Porcentagem de Usuários (%)',
+                        font: { size: 14, color: '#E0E0E0' }
                     },
-                    legend: {
-                        display: false // Oculta a legenda por padrão
-                    },
-                    tooltip: {
-                        enabled: true,
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                        titleColor: '#E0E0E0',
-                        bodyColor: '#E0E0E0',
-                        borderColor: '#5d007c',
-                        borderWidth: 1,
-                        displayColors: true,
-                        boxPadding: 4,
-                    }
+                    ticks: { color: '#E0E0E0' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
                 },
-                scales: {
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        title: {
-                            display: true,
-                            text: 'Adesão (%)',
-                            color: '#E0E0E0'
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        },
-                        ticks: {
-                            color: '#E0E0E0'
-                        }
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        title: {
-                            display: true,
-                            text: 'Culto à beleza (índice)',
-                            color: '#E0E0E0'
-                        },
-                        grid: {
-                            drawOnChartArea: false,
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        },
-                        ticks: {
-                            color: '#E0E0E0'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        },
-                        ticks: {
-                            color: '#E0E0E0'
+                y: {
+                   ticks: {
+                       font: { size: 12, color: '#E0E0E0' }
+                   },
+                   grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // Mantém a legenda oculta, como solicitado
+                },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    titleColor: '#E0E0E0',
+                    bodyColor: '#E0E0E0',
+                    borderColor: '#5d007c',
+                    borderWidth: 1,
+                    displayColors: true,
+                    boxPadding: 4,
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.x !== null) {
+                                label += context.parsed.x + '%';
+                            }
+                            return label;
                         }
                     }
                 }
             },
+            responsive: true,
+            maintainAspectRatio: true
         };
 
-        // Criação do gráfico usando Chart.js
-        const ctx = document.getElementById('myChart');
-        new Chart(ctx, config);
-
+        // 4. Criar a instância do gráfico
+        const meuGrafico = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
     </script>
 
 </body>
