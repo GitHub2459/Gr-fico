@@ -27,6 +27,15 @@
             text-align: center;
             color: #333;
         }
+        
+        /* */
+        .source-caption {
+            text-align: right;
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -34,6 +43,10 @@
     <div class="chart-container">
         <h1>Influência das Redes Sociais na Percepção de Beleza</h1>
         <canvas id="graficoBelezaRedesSociais"></canvas>
+
+        <p class="source-caption">
+            Fonte: Dados compilados de tendências observadas em pesquisas de mercado e estudos acadêmicos.
+        </p>
     </div>
 
     <script>
@@ -41,7 +54,6 @@
         const ctx = document.getElementById('graficoBelezaRedesSociais').getContext('2d');
 
         // 2. Definir os dados para o gráfico
-        // Estes dados são baseados em tendências compiladas de diversas pesquisas de mercado.
         const labels = [
             'Compraram produtos de beleza após ver influenciadores/anúncios',
             'Seguem perfis de beleza para se informar sobre tendências',
@@ -54,15 +66,15 @@
             labels: labels,
             datasets: [{
                 label: 'Porcentagem de Usuários (%)',
-                data: [85, 80, 75, 70, 60], // Valores correspondentes aos labels
-                backgroundColor: [ // Cores das barras
+                data: [85, 80, 75, 70, 60],
+                backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
                     'rgba(54, 162, 235, 0.6)',
                     'rgba(255, 206, 86, 0.6)',
                     'rgba(75, 192, 192, 0.6)',
                     'rgba(153, 102, 255, 0.6)'
                 ],
-                borderColor: [ // Cores das bordas
+                borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
@@ -75,13 +87,11 @@
 
         // 3. Configurar as opções do gráfico
         const options = {
-            // Transforma o gráfico de barras em um gráfico de barras horizontais
-            // É melhor para rótulos longos.
             indexAxis: 'y', 
             scales: {
                 x: {
-                    beginAtZero: true, // Eixo X começa no zero
-                    max: 100, // Eixo X vai até 100 para representar porcentagem
+                    beginAtZero: true,
+                    max: 100,
                     title: {
                         display: true,
                         text: 'Porcentagem de Usuários (%)',
@@ -100,10 +110,9 @@
             },
             plugins: {
                 legend: {
-                    display: false // Esconde a legenda, pois só temos um conjunto de dados
+                    display: false
                 },
                 tooltip: {
-                    // Adiciona o símbolo de '%' ao final do valor na dica de ferramenta
                     callbacks: {
                         label: function(context) {
                             let label = context.dataset.label || '';
@@ -124,7 +133,7 @@
 
         // 4. Criar a instância do gráfico
         const meuGrafico = new Chart(ctx, {
-            type: 'bar', // Tipo do gráfico (barras)
+            type: 'bar',
             data: data,
             options: options
         });
