@@ -3,29 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfico: Redes Sociais e Culto à Beleza</title>
+    <title>Gráfico Neon: Redes Sociais e Culto à Beleza</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
         body {
-            font-family: sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+            min-height: 100vh;
+            background: #0d0016; /* Fundo roxo escuro */
+            color: #E0E0E0;
             padding: 20px;
-            background-color: #f4f4f9;
         }
         h1 {
-            color: #333;
+            color: #d1bfff; /* Título roxo claro */
             text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #d1bfff, 0 0 20px #d1bfff;
         }
         .chart-container {
-            width: 80%;
-            max-width: 800px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid #5d007c;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(93, 0, 124, 0.5), 0 0 60px rgba(93, 0, 124, 0.2);
+        }
+        .legend {
+            margin-top: 20px;
+            font-style: italic;
+            color: #999;
+            text-align: center;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -37,22 +52,36 @@
         <canvas id="myChart"></canvas>
     </div>
 
+    <div class="legend">
+        <p><strong>Nota:</strong> Os dados utilizados neste gráfico são fictícios e foram criados apenas para fins de demonstração.</p>
+    </div>
+
     <script>
-        // Dados do gráfico
+        // Dados do gráfico com cores neon
         const data = {
             labels: ['2010', '2012', '2014', '2016', '2018', '2020', '2022'],
             datasets: [{
                 label: 'Adesão às redes sociais (%)',
                 data: [30, 45, 60, 75, 85, 90, 95],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                yAxisID: 'y'
+                borderColor: '#FF00A6', /* Rosa neon */
+                backgroundColor: 'rgba(255, 0, 166, 0.3)',
+                pointBackgroundColor: '#FF00A6',
+                pointBorderColor: '#FF00A6',
+                tension: 0.4,
+                yAxisID: 'y',
+                pointRadius: 6,
+                pointHoverRadius: 8
             }, {
                 label: 'Culto à beleza (índice)',
                 data: [15, 25, 40, 60, 75, 80, 85],
-                borderColor: 'rgb(54, 162, 235)',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                yAxisID: 'y1'
+                borderColor: '#00FFE0', /* Azul/Ciano neon */
+                backgroundColor: 'rgba(0, 255, 224, 0.3)',
+                pointBackgroundColor: '#00FFE0',
+                pointBorderColor: '#00FFE0',
+                tension: 0.4,
+                yAxisID: 'y1',
+                pointRadius: 6,
+                pointHoverRadius: 8
             }]
         };
 
@@ -70,7 +99,25 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Relação entre a Adesão às Redes Sociais e o Culto à Beleza'
+                        text: 'Relação entre a Adesão às Redes Sociais e o Culto à Beleza',
+                        color: '#d1bfff',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        }
+                    },
+                    legend: {
+                        display: false // Oculta a legenda por padrão
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        titleColor: '#E0E0E0',
+                        bodyColor: '#E0E0E0',
+                        borderColor: '#5d007c',
+                        borderWidth: 1,
+                        displayColors: true,
+                        boxPadding: 4,
                     }
                 },
                 scales: {
@@ -80,7 +127,14 @@
                         position: 'left',
                         title: {
                             display: true,
-                            text: 'Adesão (%)'
+                            text: 'Adesão (%)',
+                            color: '#E0E0E0'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#E0E0E0'
                         }
                     },
                     y1: {
@@ -89,10 +143,23 @@
                         position: 'right',
                         title: {
                             display: true,
-                            text: 'Culto à beleza (índice)'
+                            text: 'Culto à beleza (índice)',
+                            color: '#E0E0E0'
                         },
                         grid: {
                             drawOnChartArea: false,
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#E0E0E0'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#E0E0E0'
                         }
                     }
                 }
