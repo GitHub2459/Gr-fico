@@ -1,142 +1,108 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfico: Culto à Beleza e Redes Sociais</title>
+    <title>Gráfico: Redes Sociais e Culto à Beleza</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            flex-direction: column;
+            padding: 20px;
             background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
         }
         .chart-container {
             width: 80%;
-            max-width: 900px;
-            padding: 20px;
+            max-width: 800px;
             background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
             border-radius: 8px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        
-        /* */
-        .source-caption {
-            text-align: right;
-            font-size: 0.8em;
-            color: #666;
-            margin-top: 15px;
-            font-style: italic;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
 
+    <h1>Relação entre a Adesão às Redes Sociais e o Culto à Beleza</h1>
+    
     <div class="chart-container">
-        <h1>Influência das Redes Sociais na Percepção de Beleza</h1>
-        <canvas id="graficoBelezaRedesSociais"></canvas>
-
-        <p class="source-caption">
-            Fonte: Dados compilados de tendências observadas em pesquisas de mercado e estudos acadêmicos.
-        </p>
+        <canvas id="myChart"></canvas>
     </div>
 
     <script>
-        // 1. Obter o contexto do canvas
-        const ctx = document.getElementById('graficoBelezaRedesSociais').getContext('2d');
-
-        // 2. Definir os dados para o gráfico
-        const labels = [
-            'Compraram produtos de beleza após ver influenciadores/anúncios',
-            'Seguem perfis de beleza para se informar sobre tendências',
-            'Sentem pressão para atingir um padrão de beleza visto online',
-            'Aumentaram a preocupação com a aparência após aderir às redes sociais',
-            'Consideraram ou realizaram procedimento estético por influência das redes'
-        ];
-
+        // Dados do gráfico
         const data = {
-            labels: labels,
+            labels: ['2010', '2012', '2014', '2016', '2018', '2020', '2022'],
             datasets: [{
-                label: 'Porcentagem de Usuários (%)',
-                data: [85, 80, 75, 70, 60],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(255, 206, 86, 0.6)',
-                    'rgba(75, 192, 192, 0.6)',
-                    'rgba(153, 102, 255, 0.6)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
-                borderWidth: 1
+                label: 'Adesão às redes sociais (%)',
+                data: [30, 45, 60, 75, 85, 90, 95],
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                yAxisID: 'y'
+            }, {
+                label: 'Culto à beleza (índice)',
+                data: [15, 25, 40, 60, 75, 80, 85],
+                borderColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                yAxisID: 'y1'
             }]
         };
 
-        // 3. Configurar as opções do gráfico
-        const options = {
-            indexAxis: 'y', 
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    max: 100,
+        // Configurações do gráfico
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
+                plugins: {
                     title: {
                         display: true,
-                        text: 'Porcentagem de Usuários (%)',
-                        font: {
-                            size: 14
-                        }
+                        text: 'Relação entre a Adesão às Redes Sociais e o Culto à Beleza'
                     }
                 },
-                y: {
-                   ticks: {
-                       font: {
-                           size: 12
-                       }
-                   }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            if (context.parsed.x !== null) {
-                                label += context.parsed.x + '%';
-                            }
-                            return label;
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Adesão (%)'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Culto à beleza (índice)'
+                        },
+                        grid: {
+                            drawOnChartArea: false,
                         }
                     }
                 }
             },
-            responsive: true,
-            maintainAspectRatio: true
         };
 
-        // 4. Criar a instância do gráfico
-        const meuGrafico = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: options
-        });
+        // Criação do gráfico usando Chart.js
+        const ctx = document.getElementById('myChart');
+        new Chart(ctx, config);
+
     </script>
 
 </body>
