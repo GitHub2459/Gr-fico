@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico: Culto à Beleza e Redes Sociais</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chart-container">
+        <h1>Influência das Redes Sociais na Percepção de Beleza</h1>
+        <canvas id="graficoBelezaRedesSociais"></canvas>
+    </div>
+
+    <script>
+        // 1. Obter o contexto do canvas
+        const ctx = document.getElementById('graficoBelezaRedesSociais').getContext('2d');
+
+        // 2. Definir os dados para o gráfico
+        // Estes dados são baseados em tendências compiladas de diversas pesquisas de mercado.
+        const labels = [
+            'Compraram produtos de beleza após ver influenciadores/anúncios',
+            'Seguem perfis de beleza para se informar sobre tendências',
+            'Sentem pressão para atingir um padrão de beleza visto online',
+            'Aumentaram a preocupação com a aparência após aderir às redes sociais',
+            'Consideraram ou realizaram procedimento estético por influência das redes'
+        ];
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Porcentagem de Usuários (%)',
+                data: [85, 80, 75, 70, 60], // Valores correspondentes aos labels
+                backgroundColor: [ // Cores das barras
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)'
+                ],
+                borderColor: [ // Cores das bordas
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // 3. Configurar as opções do gráfico
+        const options = {
+            // Transforma o gráfico de barras em um gráfico de barras horizontais
+            // É melhor para rótulos longos.
+            indexAxis: 'y', 
+            scales: {
+                x: {
+                    beginAtZero: true, // Eixo X começa no zero
+                    max: 100, // Eixo X vai até 100 para representar porcentagem
+                    title: {
+                        display: true,
+                        text: 'Porcentagem de Usuários (%)',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                y: {
+                   ticks: {
+                       font: {
+                           size: 12
+                       }
+                   }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // Esconde a legenda, pois só temos um conjunto de dados
+                },
+                tooltip: {
+                    // Adiciona o símbolo de '%' ao final do valor na dica de ferramenta
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.x !== null) {
+                                label += context.parsed.x + '%';
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        };
+
+        // 4. Criar a instância do gráfico
+        const meuGrafico = new Chart(ctx, {
+            type: 'bar', // Tipo do gráfico (barras)
+            data: data,
+            options: options
+        });
+    </script>
+
+</body>
+</html>
